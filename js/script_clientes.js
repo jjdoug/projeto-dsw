@@ -1,4 +1,4 @@
-const URL_CLIENTES = 'http://localhost:5000/clientes';
+const URL_CLIENTES = 'http://200.133.17.234:5000/clientes';
 
 const formCliente = document.getElementById('formCliente');
 const listaClientes = document.getElementById('listaClientes');

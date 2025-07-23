@@ -1,41 +1,94 @@
-<h2>Administração</h2>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Área Administrativa - Sistema de Logística</title>
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <h2>Administração</h2>
 
-<section id="clientes">
-  <h3>Cadastro de Clientes</h3>
-  <form id="formCliente">
-    <input type="text" id="nomeCliente" placeholder="Nome completo" required>
-    <input type="text" id="cpfCnpjCliente" placeholder="CPF ou CNPJ" required>
-    <input type="email" id="emailCliente" placeholder="E-mail" required>
-    <input type="text" id="enderecoCliente" placeholder="Endereço" required>
-    <button type="submit">Cadastrar Cliente</button>
-  </form>
+  <section id="clientes">
+    <h3>Cadastro de Clientes</h3>
+    <form id="formCliente">
+      <input type="text" id="nomeCliente" placeholder="Nome completo" required>
+      <input type="text" id="cpfCnpjCliente" placeholder="CPF ou CNPJ" required>
+      <input type="email" id="emailCliente" placeholder="E-mail" required>
+      <input type="text" id="enderecoCliente" placeholder="Endereço" required>
+      <button type="submit">Cadastrar Cliente</button>
+    </form>
 
-  <h4>Lista de Clientes</h4>
-  <input type="text" id="filtroCliente" placeholder="Filtrar por nome ou CPF/CNPJ">
-  <ul id="listaClientes"></ul>
-</section>
+    <h4>Lista de Clientes</h4>
+    <input type="text" id="filtroCliente" placeholder="Filtrar por nome ou CPF/CNPJ">
+    <ul id="listaClientes"></ul>
+  </section>
 
-<hr>
+  <hr>
 
-<section id="encomendas">
-  <h3>Cadastro de Encomendas</h3>
-  <form id="formEncomenda">
-    <input type="number" step="0.01" id="pesoEncomenda" placeholder="Peso (kg)" required>
-    <select id="tipoEncomenda" required>
-      <option value="">Selecione o tipo</option>
-      <option value="documento">Documento</option>
-      <option value="caixa">Caixa</option>
-      <option value="palete">Palete</option>
-    </select>
-    <input type="text" id="descricaoEncomenda" placeholder="Descrição" required>
-    <input type="text" id="enderecoEntrega" placeholder="Endereço de entrega" required>
-    <button type="submit">Cadastrar Encomenda</button>
-  </form>
+  <section id="encomendas">
+    <h3>Cadastro de Encomendas</h3>
+    <form id="formEncomenda">
+      <input type="number" step="0.01" id="pesoEncomenda" placeholder="Peso (kg)" required>
+      <select id="tipoEncomenda" required>
+        <option value="">Selecione o tipo</option>
+        <option value="documento">Documento</option>
+        <option value="caixa">Caixa</option>
+        <option value="palete">Palete</option>
+      </select>
+      <input type="text" id="descricaoEncomenda" placeholder="Descrição" required>
+      <input type="text" id="enderecoEntrega" placeholder="Endereço de entrega" required>
+      <button type="submit">Cadastrar Encomenda</button>
+    </form>
 
-  <h4>Lista de Encomendas</h4>
-  <input type="text" id="filtroEncomenda" placeholder="Filtrar por tipo ou peso">
-  <ul id="listaEncomendas"></ul>
-</section>
+    <h4>Lista de Encomendas</h4>
+    <input type="text" id="filtroEncomenda" placeholder="Filtrar por tipo ou peso">
+    <ul id="listaEncomendas"></ul>
+  </section>
 
-<script src="js/script_clientes.js"></script>
-<script src="js/script_encomendas.js"></script>
+  <hr>
+
+  <section id="rotas">
+    <h3>Cadastro de Rotas</h3>
+    <form id="formRota">
+      <input type="text" id="origemRota" placeholder="Origem" required>
+      <input type="text" id="destinoRota" placeholder="Destino" required>
+      <input type="text" id="centrosIntermediarios" placeholder="Centros Intermediários (separados por vírgula)">
+      <input type="number" id="distanciaRota" placeholder="Distância (km)" step="0.1" required>
+      <input type="number" id="tempoEstimadoRota" placeholder="Tempo Estimado (h)" step="0.1" required>
+      <button type="submit">Cadastrar Rota</button>
+    </form>
+
+    <h4>Lista de Rotas</h4>
+    <input type="text" id="filtroRota" placeholder="Filtrar por origem ou destino">
+    <ul id="listaRotas"></ul>
+  </section>
+
+  <hr>
+
+  <section id="entregas">
+    <h3>Cadastro de Entregas</h3>
+    <form id="formEntrega">
+      <select id="clienteEntrega" required></select>
+      <select id="encomendaEntrega" required></select>
+      <select id="rotaEntrega" required></select>
+      <input type="date" id="dataEstimadaEntrega" required>
+      <select id="statusEntrega" required>
+        <option value="em_preparo">Em preparo</option>
+        <option value="a_caminho">A caminho</option>
+        <option value="entregue">Entregue</option>
+      </select>
+      <button type="submit">Cadastrar Entrega</button>
+    </form>
+
+    <h4>Lista de Entregas</h4>
+    <input type="text" id="filtroEntrega" placeholder="Filtrar por cliente, rota, data ou status">
+    <ul id="listaEntregas"></ul>
+  </section>
+
+  <script src="js/script_clientes.js"></script>
+  <script src="js/script_encomendas.js"></script>
+  <script src="js/script_rotas.js"></script>
+  <script src="js/script_entregas.js"></script>
+</body>
+</html>

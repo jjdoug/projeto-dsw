@@ -1,4 +1,4 @@
-const URL_ENCOMENDAS = 'http://localhost:5000/encomendas';
+const URL_ENCOMENDAS = 'http://200.133.17.234:5000/encomendas';
 
 const formEncomenda = document.getElementById('formEncomenda');
 const listaEncomendas = document.getElementById('listaEncomendas');

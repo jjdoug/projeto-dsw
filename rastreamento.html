@@ -9,9 +9,22 @@
 <body>
     <h1>Rastreamento de Entregas</h1>
 
-    <label for="inputCodigo">Digite o Código de Rastreamento:</label><br />
-    <input type="text" id="inputCodigo" placeholder="Ex: BR123456789PE" />
-    <button onclick="buscarEntrega()">Buscar</button>
+    <div>
+        <label for="inputCodigo">Código de Rastreamento:</label>
+        <input type="text" id="inputCodigo" placeholder="Ex: BR123456789PE" />
+    </div>
+
+    <div>
+        <label for="inputCliente">Nome do Cliente:</label>
+        <input type="text" id="inputCliente" placeholder="Ex: Jefferson" />
+    </div>
+
+    <div>
+        <label for="inputStatus">Status da Entrega:</label>
+        <input type="text" id="inputStatus" placeholder="Ex: Em trânsito" />
+    </div>
+
+    <button onclick="buscarEntregas()">Buscar</button>
 
     <div id="resultado"></div>
 

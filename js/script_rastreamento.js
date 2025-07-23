@@ -1,49 +1,75 @@
-const API_URL = 'http://localhost:5000'; // Usa o IP externo
+const API_URL = 'http://200.133.17.234:5000';
 
-async function buscarEntrega() {
-    const codigo = document.getElementById('inputCodigo').value.trim();
+async function buscarEntregas() {
+    const codigo = document.getElementById('inputCodigo').value.trim().toLowerCase();
+    const clienteFiltro = document.getElementById('inputCliente').value.trim().toLowerCase();
+    const status = document.getElementById('inputStatus').value.trim().toLowerCase();
     const resultadoDiv = document.getElementById('resultado');
     resultadoDiv.innerHTML = '';
 
-    if (!codigo) {
-        alert('Por favor, digite um código de rastreamento.');
-        return;
-    }
-
     try {
-        // Busca todas as entregas
-        const response = await fetch(`${API_URL}/entregas`);
-        if (!response.ok) throw new Error('Erro ao buscar entregas');
-        const entregas = await response.json();
+        const [clientesResponse, entregasResponse] = await Promise.all([
+            fetch(`${API_URL}/clientes`),
+            fetch(`${API_URL}/entregas`)
+        ]);
+        if (!clientesResponse.ok) throw new Error('Erro ao buscar clientes');
+        if (!entregasResponse.ok) throw new Error('Erro ao buscar entregas');
 
-        // Filtra pela propriedade codigo_rastreamento
-        const entrega = entregas.find(e => e.codigo_rastreamento === codigo);
+        const clientes = await clientesResponse.json();
+        const entregas = await entregasResponse.json();
 
-        if (!entrega) {
-            resultadoDiv.innerHTML = `<p>Entrega não encontrada para o código: <strong>${codigo}</strong></p>`;
+        const mapaClientes = {};
+        clientes.forEach(c => {
+            mapaClientes[c.id] = c.nome;
+        });
+
+        const filtradas = entregas.filter(entrega => {
+            const matchCodigo = codigo && (
+                (entrega.codigo_rastreamento?.toLowerCase().includes(codigo)) ||
+                (entrega.id?.toLowerCase().includes(codigo))
+            );
+
+            const nomeCliente = mapaClientes[entrega.clienteId] || '';
+
+            const matchCliente = clienteFiltro && nomeCliente.toLowerCase().includes(clienteFiltro);
+            const matchStatus = status && entrega.status && entrega.status.toLowerCase().includes(status);
+
+            return (
+                (codigo && matchCodigo) ||
+                (clienteFiltro && matchCliente) ||
+                (status && matchStatus)
+            );
+        });
+
+        if (filtradas.length === 0) {
+            resultadoDiv.innerHTML = '<p>Nenhuma entrega encontrada com os filtros fornecidos.</p>';
             return;
         }
 
-        // Exibe dados básicos da entrega
-        let html = `
-            <h2>Dados da Entrega</h2>
-            <p><strong>Código de Rastreamento:</strong> ${entrega.codigo_rastreamento}</p>
-            <p><strong>Status Atual:</strong> ${entrega.status}</p>
-            <p><strong>Data Estimada:</strong> ${entrega.data_estimada}</p>
-        `;
+        filtradas.forEach(entrega => {
+            const nomeCliente = mapaClientes[entrega.clienteId] || 'Não informado';
 
-        // Exibe histórico de movimentações
-        if (entrega.historico && entrega.historico.length > 0) {
-            html += `<h3>Histórico de Movimentações:</h3><ul>`;
-            entrega.historico.forEach(evento => {
-                html += `<li>${new Date(evento.data).toLocaleString()} - ${evento.status} (${evento.local})</li>`;
-            });
-            html += `</ul>`;
-        } else {
-            html += `<p>Sem histórico disponível.</p>`;
-        }
+            let html = `
+                <div class="entrega">
+                    <h2>${entrega.codigo_rastreamento || entrega.id}</h2>
+                    <p><strong>Cliente:</strong> ${nomeCliente}</p>
+                    <p><strong>Status:</strong> ${entrega.status}</p>
+                    <p><strong>Data Estimada:</strong> ${entrega.data_estimada}</p>
+            `;
 
-        resultadoDiv.innerHTML = html;
+            if (entrega.historico && entrega.historico.length > 0) {
+                html += `<h4>Histórico:</h4><ul>`;
+                entrega.historico.forEach(evento => {
+                    html += `<li>${new Date(evento.data).toLocaleString()} - ${evento.status} (${evento.local})</li>`;
+                });
+                html += `</ul>`;
+            } else {
+                html += `<p>Sem histórico disponível.</p>`;
+            }
+
+            html += `</div><hr>`;
+            resultadoDiv.innerHTML += html;
+        });
 
     } catch (error) {
         resultadoDiv.innerHTML = `<p>Erro na busca: ${error.message}</p>`;
