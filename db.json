@@ -80,6 +80,17 @@
       "distancia_km": 120,
       "tempo_estimado_h": 1.5,
       "centros_intermediarios": []
+    },
+    {
+      "id": "7a6d",
+      "origem": "Juazeiro do Norte",
+      "destino": "Caruaru",
+      "centros_intermediarios": [
+        "Crato",
+        "Barbalha"
+      ],
+      "distancia_km": 600,
+      "tempo_estimado_h": 10
     }
   ],
   "entregas": [
@@ -103,6 +114,14 @@
           "local": "Em trânsito para Caruaru"
         }
       ]
+    },
+    {
+      "id": "f9a0",
+      "clienteId": 48,
+      "encomendaId": null,
+      "rotaId": "7a6d",
+      "data_estimada": "2025-07-21",
+      "status": "entregue"
     }
   ]
 }
