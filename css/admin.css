@@ -60,3 +60,23 @@ ul li {
   padding: 8px 12px;
   border-radius: 4px;
 }
+
+h2 {
+  text-align: center;
+}
+
+.header-admin {
+  display: flex;
+  align-items: center;        
+  justify-content: center;    
+  position: relative;          
+  margin-bottom: 20px;
+}
+
+.botao-voltar {
+  position: absolute;
+  right: 0;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 1rem;
+}

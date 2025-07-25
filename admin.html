@@ -6,8 +6,18 @@
   <title>Área Administrativa - Sistema de Logística</title>
   <link rel="stylesheet" href="css/admin.css" />
 </head>
+
+<script>
+  if (!sessionStorage.getItem("adminLogado")) {
+    window.location.href = "login.html";
+  } 
+</script>
+
 <body>
-  <h2>Administração</h2>
+  <div class="header-admin">
+    <h2>Administração</h2>
+    <button class="botao-voltar" onclick="window.location.href='index.html'">Voltar</button>
+  </div>
 
   <section id="clientes">
     <h3>Cadastro de Clientes</h3>
